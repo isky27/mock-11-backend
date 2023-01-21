@@ -1,7 +1,7 @@
 const express = require('express');
 const JWT = require("jsonwebtoken")
 const argon2 = require("argon2")
-const UserModel = require("./User.model")
+const UserModel = require("./user.model")
 const router = express.Router()
 
 router.post('/signup', async (req, res) => {
@@ -35,6 +35,12 @@ router.post("/login", async (req, res) => {
         }
     }
     return res.status(401).send({ message: "Invalid Credentials or User is not Registerd" })
+
+})
+
+router.get("/getProfile", async(req,res)=>{
+
+    const token = 
 
 })
 
