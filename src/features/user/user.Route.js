@@ -38,11 +38,11 @@ router.post("/login", async (req, res) => {
 
 })
 
-router.get("/getProfile", async(req,res)=>{
+// router.get("/getProfile", async(req,res)=>{
 
-    const token = 
+//     const token = 
 
-})
+// })
 
 
 module.exports = router;
