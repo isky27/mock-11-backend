@@ -29,7 +29,7 @@ router.post("/login", async (req, res) => {
     if (user) {
         if (await argon2.verify(user.password, password)) {
             const token = JWT.sign({ id: user._id }, SECRETKEY, { expiresIn: "7 days" });
-            return res.status(200).send({ message: "Login successfully", token })
+            return res.status(200).send({ message: "Login successfully", token , userId:user._id })
         } else {
             return res.status(401).send({ message: "Invalid Credentials" })
         }
@@ -38,11 +38,24 @@ router.post("/login", async (req, res) => {
 
 })
 
-// router.get("/getProfile", async(req,res)=>{
+router.get("/getProfile/:id", async(req,res)=>{
+ 
+    const {id} = req.params;
 
-//     const token = 
-
-// })
+    const token = req.headers["authorization"]
+    if(!token){
+        return res.status(401).send({ message: "Unauthorised" })
+    }
+    try {
+        const varification = JWT.verify(token, SECRETKEY);
+        if(varification){
+            const user = await UserModel.findOne({_id:id})
+            return res.status(200).send({ message:"User found", user })
+        }
+    } catch (error) {
+        return res.status(401).send({ message: "Something Went Wrong" })
+    }
+})
 
 
 module.exports = router;
